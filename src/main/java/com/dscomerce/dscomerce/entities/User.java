@@ -1,6 +1,7 @@
 package com.dscomerce.dscomerce.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -27,7 +28,7 @@ public class User {
 	private String password;
 	
 	@OneToMany(mappedBy="client")
-	private List<Order> orders;
+	private List<Order> orders = new ArrayList<>();
 	
 	public User() {}
 
@@ -88,7 +89,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public List<Order> getOrders() {
+		return orders;
+	}
 	
 	
 }
