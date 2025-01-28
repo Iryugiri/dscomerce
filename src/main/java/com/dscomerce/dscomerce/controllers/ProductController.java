@@ -2,13 +2,15 @@ package com.dscomerce.dscomerce.controllers;
 
 import com.dscomerce.dscomerce.dto.ProductDTO;
 import com.dscomerce.dscomerce.services.ProductService;
-import jakarta.persistence.Access;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/products")
@@ -21,6 +23,11 @@ public class ProductController {
     public ProductDTO findById(@PathVariable Long id) {
         System.out.println(id);
         return productService.findById(id);
+    }
+
+    @GetMapping
+    public Page<ProductDTO> findAll(Pageable pageable) {
+        return productService.findAll(pageable);
     }
 
 }
