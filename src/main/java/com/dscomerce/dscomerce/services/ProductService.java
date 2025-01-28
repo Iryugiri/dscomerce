@@ -28,4 +28,28 @@ public class ProductService {
     public Page<ProductDTO> findAll(Pageable pageable) {
         return productRepository.findAll(pageable).map(ProductDTO::new);
     }
+
+    @Transactional
+    public ProductDTO insert(ProductDTO productDTO) {
+        Product entity = new Product();
+        copyDtoToEntity(productDTO, entity);
+        entity = productRepository.save(entity);
+        return new ProductDTO( entity );
+    }
+
+    @Transactional
+    public ProductDTO update(Long id, ProductDTO productDTO) {
+        Product entity = productRepository.getReferenceById(id);
+        copyDtoToEntity(productDTO, entity);
+        entity = productRepository.save(entity);
+        return new ProductDTO(entity);
+    }
+
+    private void copyDtoToEntity(ProductDTO productDTO, Product entity) {
+        entity.setName( productDTO.getName());
+        entity.setDescription( productDTO.getDescription() );
+        entity.setPrice( productDTO.getPrice());
+        entity.setImgUrl( productDTO.getImgUrl());
+    }
+
 }
